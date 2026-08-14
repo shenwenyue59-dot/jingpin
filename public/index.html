@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>年度品牌雷达</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="topbar">
+        <div>
+          <h1>年度品牌雷达</h1>
+          <p>扫描 2024.08-2026.08 的品牌数据，对比 2024.08-2025.08 与 2025.08-2026.08 两个滚动年度窗口。</p>
+        </div>
+        <div class="actions">
+          <button id="syncBtn">同步飞瓜数据</button>
+          <span id="status">等待同步</span>
+        </div>
+      </section>
+
+      <section class="filters">
+        <label>观察周期 <input id="startMonth" value="2024-08" /></label>
+        <label>至 <input id="endMonth" value="2026-08" /></label>
+        <div class="categoryTabs" aria-label="类目">
+          <button class="active" data-category-id="115">美妆</button>
+          <button data-category-id="1000005791">婴童洗护</button>
+        </div>
+      </section>
+
+      <section class="metrics">
+        <article><span>当前类目品牌池</span><strong id="metricBrands">-</strong></article>
+        <article><span>最高年化增长率</span><strong id="metricGrowth">-</strong></article>
+        <article><span>最大平均排名提升</span><strong id="metricRank">-</strong></article>
+        <article><span>黑马候选</span><strong id="metricHorse">-</strong></article>
+      </section>
+
+      <section class="tabs">
+        <button class="active" data-tab="growth">增长品牌</button>
+        <button data-tab="blackHorse">新锐黑马</button>
+      </section>
+
+      <section class="tableWrap">
+        <table>
+          <thead>
+            <tr>
+              <th>品牌</th>
+              <th>上年榜内累计 / 年化</th>
+              <th>今年榜内累计 / 年化</th>
+              <th>年化增长率</th>
+              <th>平均排名变化</th>
+              <th>分段趋势</th>
+              <th>判断</th>
+            </tr>
+          </thead>
+          <tbody id="brandRows"></tbody>
+        </table>
+      </section>
+    </main>
+
+    <aside id="drawer" class="drawer">
+      <button id="closeDrawer" class="iconBtn" aria-label="关闭">×</button>
+      <div id="drawerContent"></div>
+    </aside>
+
+    <script src="app.js"></script>
+  </body>
+</html>
