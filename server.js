@@ -398,13 +398,13 @@ const server = http.createServer(async (req, res) => {
     if (url.pathname === "/api/data") {
       if (!fs.existsSync(DATA_FILE)) return send(res, 200, JSON.stringify({ ok: true, data: null }));
       const raw = JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
-      const data = raw.source === "feigua-brand-rank-custom" ? raw : raw.points ? computeRadar(raw) : raw;
+      const data = raw.source === "feigua-brand-rank-custom" || raw.source === "feigua-brand-rank-monthly" ? raw : raw.points ? computeRadar(raw) : raw;
       return send(res, 200, JSON.stringify({ ok: true, data }));
     }
     if (url.pathname === "/api/analyze" && req.method === "POST") {
       const body = await readJson(req);
       const data = fs.existsSync(DATA_FILE) ? JSON.parse(fs.readFileSync(DATA_FILE, "utf8")) : null;
-      const ready = data?.source === "feigua-brand-rank-custom" ? data : data?.points ? computeRadar(data) : data;
+      const ready = data?.source === "feigua-brand-rank-custom" || data?.source === "feigua-brand-rank-monthly" ? data : data?.points ? computeRadar(data) : data;
       const brand = ready?.brands?.find((b) => b.id === body.id);
       if (!brand) return send(res, 404, JSON.stringify({ ok: false, error: "品牌不存在" }));
       return send(res, 200, JSON.stringify({ ok: true, analysis: generateAnalysis(brand, body.mode) }));

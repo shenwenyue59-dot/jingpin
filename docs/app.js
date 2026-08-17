@@ -77,7 +77,7 @@ function monthRows(brand) {
     const rankMove = prev && prev.rank ? prev.rank - m.rank : null;
     return `
       <tr>
-        <td>${escapeHtml(m.month)}<small>${escapeHtml(m.fromDateCode || "")}-${escapeHtml(m.toDateCode || "")}</small></td>
+        <td>${escapeHtml(m.month)}<small>${escapeHtml(m.datecode || "")}</small></td>
         <td><strong>${fmtMoney(Number(m.gmv || 0))}</strong><small>${escapeHtml(m.gmvText || "")}</small></td>
         <td>第${escapeHtml(m.rank)}名</td>
         <td class="${mom == null || mom >= 0 ? "up" : "down"}">${fmtPct(mom)}</td>
@@ -209,18 +209,18 @@ async function openDrawer(id) {
       <article><span>本年度榜内年化</span><strong>${fmtMoney(brand.currentAnnualized)}</strong></article>
       <article><span>年化增长率</span><strong>${fmtPct(brand.growthRate)}</strong></article>
       <article><span>平均排名变化</span><strong>${rankChangeText(brand)}</strong></article>
-      <article><span>分段最高估算销售额</span><strong>${fmtMoney(brand.maxGmv)}</strong></article>
-      <article><span>分段最低估算销售额</span><strong>${fmtMoney(brand.minGmv)}</strong></article>
+      <article><span>月度最高估算销售额</span><strong>${fmtMoney(brand.maxGmv)}</strong></article>
+      <article><span>月度最低估算销售额</span><strong>${fmtMoney(brand.minGmv)}</strong></article>
       <article><span>月度覆盖</span><strong>${brand.observedMonths}/${brand.expectedMonths}</strong><small>${Math.round((brand.coverageRate || 0) * 100)}% 有榜内数据</small></article>
     </div>
-    <div class="chartBox"><h3>分段销售趋势</h3>${spark(brand.monthly, 456, 120)}</div>
+    <div class="chartBox"><h3>月度销售趋势</h3>${spark(brand.monthly, 456, 120)}</div>
     <div class="chartBox"><h3>行业排名趋势</h3>${rankSpark(brand.monthly)}<p>${brand.monthly.map((m) => `${m.month}: 第${m.rank}名`).join(" ｜ ")}</p></div>
     <div class="chartBox monthlyBox">
-      <h3>分段数据明细</h3>
+      <h3>月度数据明细</h3>
       <table class="monthlyTable">
         <thead>
           <tr>
-            <th>分段</th>
+            <th>月份</th>
             <th>销售额</th>
             <th>排名</th>
             <th>环比</th>
@@ -267,7 +267,7 @@ function localAnalysis(brand, mode) {
     bullets: [
       `销售规模提升明显，本年度榜内累计达到${fmtMoney(brand.currentTotal)}。`,
       `排名从${fmtRank(brand.baseAvgRank)}变化到${fmtRank(brand.currentAvgRank)}，说明行业相对位置同步改善。`,
-      `分段趋势覆盖${brand.observedMonths}/${brand.expectedMonths}个观测点，建议继续点开月度明细核对爆发月份和缺失月份。`
+      `月度趋势覆盖${brand.observedMonths}/${brand.expectedMonths}个观测点，建议继续点开月度明细核对爆发月份和缺失月份。`
     ],
     attention: (brand.growthRate || 0) >= 1 || (brand.rankLift || 0) >= 30 ? "高" : "中"
   };
