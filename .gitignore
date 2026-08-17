@@ -5,6 +5,8 @@ node_modules/
 outputs/
 work/edge-debug-profile*/
 work/*.log
+work/*.json
+work/brand-rank.js
 
 *.local
 Thumbs.db
